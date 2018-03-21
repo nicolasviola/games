@@ -32,6 +32,11 @@ function init() {
   //wall.push(new Rectangle(100, 50, 10, 10))
   //wall.push(new Rectangle(100, 100, 10, 10))
 
+  // Load saved highscores
+  if (localStorage.highscores) {
+    highscores = localStorage.highscores.split(',');
+  }
+
   // Start game
   run()
   repaint()

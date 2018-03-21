@@ -21,4 +21,6 @@ var KEY_ENTER = 13,
   iBody = new Image(),
   iFood = new Image(),
   aEat = new Audio(),
-  aDie = new Audio();
+  aDie = new Audio(),
+  highscores = [],
+  posHighscore = 10;
