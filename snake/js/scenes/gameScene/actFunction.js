@@ -6,7 +6,7 @@ gameScene.act = function () {
   if (!pause) {
     // GameOver Reset
     if (gameover) {
-      loadScene(mainScene)
+      loadScene(highscoresScene)
     }
 
     // Move Body
@@ -67,6 +67,7 @@ gameScene.act = function () {
     //  if (body[0].intersects(wall[i])) {
     //    gameover = true
     //    pause = true
+    //    addHighscore(score);
     //  }
     // }
 
@@ -75,16 +76,24 @@ gameScene.act = function () {
       if (body[0].intersects(body[i])) {
         gameover = true
         pause = true
+        addHighscore(score);
         aDie.play()
       }
     }
 
     // Food Intersects
     if (body[0].intersects(food)) {
-      body.push(new Rectangle(food.x, food.y, 10, 10))
+      body.push(new Rectangle(body[0].x, body[0].y, 10, 10))
       score += 1
-      food.x = random(canvas.width / 10 - 1) * 10
-      food.y = random(canvas.height / 10 - 1) * 10
+      for (i = 0, l = body.length; i < l; i += 1) {
+       if (food.intersects(body[i])) {
+         food.x = random(canvas.width / 10 - 1) * 10
+         food.y = random(canvas.height / 10 - 1) * 10
+       } else {
+         food.x = random(canvas.width / 10 - 1) * 10
+         food.y = random(canvas.height / 10 - 1) * 10
+       }
+     }
       aEat.play()
     }
   }
