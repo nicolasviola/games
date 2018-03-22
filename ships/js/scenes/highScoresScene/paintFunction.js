@@ -1,6 +1,6 @@
 //Create paint function
 
-highscoresScene.paint = function (ctx) {
+highScoresScene.paint = function (ctx) {
   var i = 0,
       l = 0;
 
@@ -11,16 +11,16 @@ highscoresScene.paint = function (ctx) {
   // Draw title
   ctx.fillStyle = '#fff';
   ctx.textAlign = 'center';
-  ctx.fillText('HIGH SCORES', 150, 20);
+  ctx.fillText('HIGH SCORES', 100, 20);
 
   // Draw high scores
   ctx.textAlign = 'right';
   for (i = 0, l = highscores.length; i < l; i += 1) {
     if (i === posHighscore) {
-        ctx.fillText('->   ' + highscores[i], 150, 40 + i * 10);
+        ctx.fillText('->   ' + highscores[i], 100, 40 + i * 10);
     }
     else {
-        ctx.fillText(highscores[i], 150, 40 + i * 10);
+        ctx.fillText(highscores[i], 100, 40 + i * 10);
     }
   }
 };

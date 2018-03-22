@@ -8,6 +8,6 @@ mainScene.paint = function (ctx) {
   // Draw title
   ctx.fillStyle = '#fff'
   ctx.textAlign = 'center'
-  ctx.fillText('SNAKE', 150, 60)
-  ctx.fillText('Press Enter', 150, 80)
+  ctx.fillText('SHIPS', 100, 125)
+  ctx.fillText('Press Enter', 100, 175)
 }

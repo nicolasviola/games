@@ -6,7 +6,7 @@ gameScene.act = function () {
   if (!pause) {
     // GameOver Reset
     if (gameover) {
-      loadScene(highscoresScene)
+      loadScene(highScoresScene)
     }
 
     // Move Body
@@ -76,7 +76,7 @@ gameScene.act = function () {
       if (body[0].intersects(body[i])) {
         gameover = true
         pause = true
-        addHighscore(score);
+        addHighscore(score)
         aDie.play()
       }
     }

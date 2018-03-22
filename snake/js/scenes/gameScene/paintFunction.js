@@ -36,10 +36,10 @@ gameScene.paint = function (ctx) {
   if (pause) {
     ctx.textAlign = 'center'
     if (gameover) {
-      ctx.fillText('GAME OVER', 200, 100)
+      ctx.fillText('GAME OVER', 150, 75)
     }
     else {
-      ctx.fillText('PAUSE', 200, 100)
+      ctx.fillText('PAUSE', 150, 75)
     }
   }
 }
