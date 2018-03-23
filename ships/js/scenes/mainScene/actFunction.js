@@ -6,4 +6,12 @@ mainScene.act = function () {
       loadScene(highScoresScene)
       lastPress = null
   }
+
+  // Move Stars
+  for(i=0,l=stars.length;i<l;i++){
+    stars[i].y++
+    if(stars[i].y>canvas.height) {
+      stars[i].y=0
+    }
+  }
 }

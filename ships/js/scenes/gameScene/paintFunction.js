@@ -3,41 +3,57 @@ gameScene.paint = function (ctx) {
     ctx.fillStyle = '#000'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+    // Draw Stars
+    ctx.fillStyle='#fff';
+    for(i=0,l=stars.length;i<l;i++){
+      ctx.fillRect(stars[i].x,stars[i].y,1,1);
+    }
+
     // Draw player
     ctx.fillStyle = 'blue'
     if(player.timer % 2 == 0)
-      player.fill(ctx);
+      player.drawImageArea(ctx,spritesheet,(~~(elapsedTime*10)%3)*10,0,10,10);
+      // player.drawImageArea(ctx,spritesheet,0,0,10,10)
+      //player.fill(ctx);
 
     // Debug last key pressed
     ctx.fillStyle = '#fff'
     //ctx.fillText('Last Press: ' + lastPress, 0, 20);
 
-    //shots
+    // Shots
     ctx.fillStyle='#f00'
     for(var i=0,l=shots.length;i<l;i++)
-      shots[i].fill(ctx)
+      // shots[i].fill(ctx)
+      // shots[i].drawImageArea(ctx,spritesheet,70,0,5,5);
+      shots[i].drawImageArea(ctx,spritesheet,70,(~~(elapsedTime*10)%2)*5,5,5);
 
-    ctx.fillStyle='#fff'
-
-    //PowerUp
+    // PowerUp
     for(var i=0,l=powerups.length;i<l;i++){
       if(powerups[i].type == 1) {
-        ctx.fillStyle = '#f90';
+        ctx.strokeStyle='#f90'
+        powerups[i].drawImage(ctx, gun)
+        // ctx.fillStyle = '#f90'
       }
       else {
-        ctx.fillStyle = '#cc6';
+        ctx.strokeStyle='#cc6'
+        powerups[i].drawImage(ctx, star)
+        // ctx.fillStyle = '#cc6'
       }
-      powerups[i].fill(ctx);
+      // powerups[i].fill(ctx);
     }
 
-    //enemies
+    // Enemies
      for(var i=0,l=enemies.length;i<l;i++) {
       if (enemies[i].timer % 2 == 0) {
-        ctx.fillStyle = 'green'
+        ctx.strokeStyle='#00f';
+        enemies[i].drawImageArea(ctx,spritesheet,30,0,10,10);
+        // ctx.fillStyle = 'green'
       } else {
-        ctx.fillStyle = 'white'
+        ctx.strokeStyle='#fff';
+        enemies[i].drawImageArea(ctx,spritesheet,40,0,10,10);
+        // ctx.fillStyle = 'white'
       }
-      enemies[i].fill(ctx)
+      // enemies[i].fill(ctx)
     }
 
     ctx.fillStyle='#fff';

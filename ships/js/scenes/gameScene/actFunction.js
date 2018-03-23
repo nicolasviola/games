@@ -1,10 +1,20 @@
-gameScene.act = function () {
+gameScene.act = function (deltaTime) {
   if (!pause) {
 
     // GameOver Reset
 
-    if(gameover)
+    if(gameover) {
       loadScene(highScoresScene)
+    }
+
+    // Move Stars
+
+    for(i=0,l=stars.length;i<l;i++){
+      stars[i].y++
+      if(stars[i].y>canvas.height) {
+        stars[i].y=0
+      }
+    }
 
     // Move Player
 
@@ -63,7 +73,7 @@ gameScene.act = function () {
 
     // Move PowerUps
     for(var i=0,l=powerups.length;i<l;i++){
-      powerups[i].y += 10
+      powerups[i].y += 5
       // Powerup Outside Screen
       if(powerups[i].y>canvas.height) {
         powerups.splice(i--,1)
@@ -135,6 +145,12 @@ gameScene.act = function () {
           shots.splice(i-- ,1)
           l--
       }
+    }
+
+    // Elapsed time
+    elapsedTime += deltaTime;
+    if(elapsedTime > 3600) {
+      elapsedTime -= 3600;
     }
 
     // Move Messages
