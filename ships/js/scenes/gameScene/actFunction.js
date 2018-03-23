@@ -17,17 +17,18 @@ gameScene.act = function () {
 
     // Move Enemies
     for(var i=0,l=enemies.length;i<l;i++){
-      enemies[i].y+=10;
-      if(enemies[i].y>canvas.height){
+      enemies[i].y += 2;
+      if(enemies[i].timer > 0)
+        enemies[i].timer--
+      if(enemies[i].y > canvas.height) {
         enemies[i].x=random(canvas.width/10)*10;
         enemies[i].y=0;
       }
 
       // Player Intersects Enemy
-      if(player.intersects(enemies[i])){
-        gameover=true;
-        pause=true;
-        addHighscore(score)
+      if(player.intersects(enemies[i]) && player.timer == 0){
+        player.health = player.health - 1
+        player.timer = 20
       }
 
       // Shot Intersects Enemy
@@ -35,14 +36,70 @@ gameScene.act = function () {
         if (
           shots[j].rectCollision(enemies[i])
         ){
-          score++
-          enemies[i].x=random(canvas.width/10)*10
-          enemies[i].y=0
-          enemies.push(new Rectangle(random(canvas.width/10)*10,0,10,10))
-          shots.splice(j--,1)
+          enemies[i].health--
+          if(enemies[i].health == 0){
+            score++
+            // Add PowerUp
+            var r = random(20);
+            if(r < 5){
+              if(r == 0)    // New MultiShot
+                powerups.push(new Rectangle(enemies[i].x,enemies[i].y,10,10,1));
+              else        // New ExtraPoints
+                powerups.push(new Rectangle(enemies[i].x,enemies[i].y,10,10,0));
+            }
+            enemies[i].x = random(canvas.width/10) * 10
+            enemies[i].y = 0
+            enemies[i].health = 2
+            enemies.push(new Rectangle(random(canvas.width/10) * 10, 0, 10, 10, 0, 2))
+          }
+          else{
+            enemies[i].timer = 1
+          }
+          shots.splice(j--, 1)
           ll--
         }
       }
+    }
+
+    // Move PowerUps
+    for(var i=0,l=powerups.length;i<l;i++){
+      powerups[i].y += 10
+      // Powerup Outside Screen
+      if(powerups[i].y>canvas.height) {
+        powerups.splice(i--,1)
+        l--;
+        continue;
+      }
+
+      // Player intersects
+      if (player.intersects(powerups[i])){
+        if (powerups[i].type==1){ // MultiShot
+          if(multiShot < 3){
+            multiShot++;
+            messages.push(new Message('MULTI', player.x - (player.width / 2), player.y - 15))
+          }
+          else{
+            score += 5;
+            messages.push(new Message('+5', player.x - (player.width / 2), player.y - 15))
+          }
+        }
+        else{ // ExtraPoints
+          score+=5;
+          messages.push(new Message('+5', player.x - (player.width / 2), player.y - 15))
+        }
+        powerups.splice(i--,1);
+        l--;
+      }
+    }
+
+    // Timer
+    if(player.timer > 0) {
+      player.timer = player.timer - 1
+    }
+    if (player.health == 0) {
+      gameover = true;
+      pause = true;
+      addHighscore(score)
     }
 
     //walls
@@ -56,7 +113,18 @@ gameScene.act = function () {
 
     // New Shot
     if(lastPress == KEY_SPACE){
-      shots.push(new Rectangle(player.x + 3, player.y, 5, 5))
+      if(multiShot == 3){
+        shots.push(new Rectangle(player.x-3,player.y+2,5,5))
+        shots.push(new Rectangle(player.x+3,player.y,5,5))
+        shots.push(new Rectangle(player.x+9,player.y+2,5,5))
+      }
+      else if(multiShot == 2){
+        shots.push(new Rectangle(player.x,player.y,5,5))
+        shots.push(new Rectangle(player.x+5,player.y,5,5))
+      }
+      else {
+        shots.push(new Rectangle(player.x+3,player.y,5,5))
+      }
       lastPress=null
     }
 
@@ -66,6 +134,15 @@ gameScene.act = function () {
       if(shots[i].y<0){
           shots.splice(i-- ,1)
           l--
+      }
+    }
+
+    // Move Messages
+    for(var i=0,l=messages.length;i<l;i++){
+      messages[i].y += 2
+      if(messages[i].y < canvas.height - 40){
+        messages.splice(i--,1);
+        l--;
       }
     }
 

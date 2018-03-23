@@ -22,3 +22,6 @@ var highscores = []
 var posHighscore = 10
 var scenes = []
 var currentScene = 0
+var powerups = []
+var multiShot = 1
+var messages = []

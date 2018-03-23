@@ -1,8 +1,11 @@
-function Rectangle(x, y, width, height) {
+function Rectangle(x, y, width, height, type, health) {
   this.x = (x === undefined) ? 0 : x
   this.y = (y === undefined) ? 0 : y
   this.width = (width === undefined) ? 0 : width
   this.height = (height === undefined) ? this.width : height
+  this.type = (type === undefined) ? 1 : type
+  this.health = (health === undefined) ? 1 : health
+  this.timer = 0
 }
 
 Rectangle.prototype = {
