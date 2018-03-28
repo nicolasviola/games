@@ -11,7 +11,7 @@ window.requestAnimationFrame = (
 
 document.addEventListener('keydown', function (evt) {
   if (evt.which >= 37 && evt.which <= 40) {
-      evt.preventDefault()
+    evt.preventDefault()
   }
 
   lastPress = evt.which
