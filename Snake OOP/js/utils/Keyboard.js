@@ -15,7 +15,9 @@ Keyboard.KEY_ENTER = 13
 Keyboard.listen = function() {
 
   document.addEventListener('keydown', function (evt) {
+
     Keyboard.lastPress = evt.keyCode
+
   }, false)
 
 }
